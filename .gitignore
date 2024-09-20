@@ -79,5 +79,5 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-src/java/**/JasyptTest.java
+src/test/java/**/JasyptTest.java
 
