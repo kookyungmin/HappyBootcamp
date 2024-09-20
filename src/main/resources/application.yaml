@@ -1,8 +1,14 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    jdbc-url: jdbc:mysql://localhost:3306/happybean
-    username: happybean
-    password: Bean1234!@#$
+    driver-class-name: ENC(ltMchS7JKy21+9CWTycwwyUYqXYhw9zlwJySlnkLxcmBI+k1OjykENSookeP3uGT)
+    jdbc-url: ENC(X4Vxz2+MMOBwlxFThB+wtATRiVkup0adRlhGr0Fk8wkPx+b9ttYCHWRpY/f8/i59g+E5H9+5FgE=)
+    username: ENC(dYsy+sz8bQDJk3iCxaJ02WH14MCKdxjXWj8Vtthve5o=)
+    password: ENC(c8/RVh7Rjpfpo/cV0tq2339sb6HgdExrcTIU1wk8qfg=)
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    property:
+      prefix: ENC(
+      suffix: )
 server:
   port: 18080

@@ -17,14 +17,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'mysql:mysql-connector-java:8.0.33'
 //    implementation 'com.oracle.database.jdbc:ojdbc8:18.15.0.0'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
 
     testImplementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     testCompileOnly 'org.projectlombok:lombok:1.18.34'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
 }

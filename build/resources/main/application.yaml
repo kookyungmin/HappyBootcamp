@@ -1,8 +1,0 @@
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    jdbc-url: jdbc:mysql://localhost:3306/happybean
-    username: happybean
-    password: Bean1234!@#$
-server:
-  port: 18080

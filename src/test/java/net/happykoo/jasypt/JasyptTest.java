@@ -1,12 +1,13 @@
 package net.happykoo.jasypt;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
-import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import net.happykoo.config.JasyptConfig;
+import org.jasypt.encryption.StringEncryptor;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,32 +15,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestPropertySource( properties = { "jasypt.encryptor.password=Bean1234@@" })
 @Slf4j
+@SpringBootTest(classes = JasyptConfig.class)
 public class JasyptTest {
-
-    @Value("${jasypt.encryptor.password}")
-    private String encryptKey;
+    @Resource(name = "jasyptStringEncryptor")
+    private StringEncryptor encryptor;
 
     @Test
     public void jasyptTest() {
         Map<String, String> dbInfo = new HashMap<>();
-        dbInfo.put("driverNm", "");
-        dbInfo.put("jdbcUrl", "");
-        dbInfo.put("userNm", "");
-        dbInfo.put("userPw", "");
+        dbInfo.put("driverNm", "com.mysql.cj.jdbc.Driver");
+        dbInfo.put("jdbcUrl", "jdbc:mysql://localhost:3306/happybean");
+        dbInfo.put("userNm", "happybean");
+        dbInfo.put("userPw", "Bean1234!@#$");
         dbInfo.put("cryptoKey", "flskdlqjstm");
-
-        PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
-        SimpleStringPBEConfig config = new SimpleStringPBEConfig();
-
-        config.setPassword(encryptKey);
-        config.setAlgorithm("PBEWithMD5AndDES");
-        config.setKeyObtentionIterations("1000");
-        config.setPoolSize("1");
-        config.setProviderName("SunJCE");
-        config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
-        config.setIvGeneratorClassName("org.jasypt.iv.RandomIvGenerator");
-        config.setStringOutputType("base64");
-        encryptor.setConfig(config);
 
         dbInfo.forEach((key, value) -> {
             String encryptText = encryptor.encrypt(value);
