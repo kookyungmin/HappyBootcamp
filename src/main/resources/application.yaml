@@ -2,13 +2,24 @@ spring:
   datasource:
     driver-class-name: ENC(ltMchS7JKy21+9CWTycwwyUYqXYhw9zlwJySlnkLxcmBI+k1OjykENSookeP3uGT)
     jdbc-url: ENC(X4Vxz2+MMOBwlxFThB+wtATRiVkup0adRlhGr0Fk8wkPx+b9ttYCHWRpY/f8/i59g+E5H9+5FgE=)
-    username: ENC(dYsy+sz8bQDJk3iCxaJ02WH14MCKdxjXWj8Vtthve5o=)
+    username: ENC(HOZ3tSR6ulcY/4X97I2Co+29kG9G8uWo)
     password: ENC(c8/RVh7Rjpfpo/cV0tq2339sb6HgdExrcTIU1wk8qfg=)
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  devtools:
+    restart:
+      enabled: true
+    additional-paths: src/main/webapp
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
     property:
       prefix: ENC(
       suffix: )
+logging:
+  level:
+    root: INFO
 server:
   port: 18080

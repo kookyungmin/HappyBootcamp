@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.5.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'war'
 }
 
 group 'net.happykoo'
@@ -12,6 +13,8 @@ repositories {
 }
 
 dependencies {
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
     compileOnly 'org.projectlombok:lombok:1.18.34'
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -19,11 +22,19 @@ dependencies {
 //    implementation 'com.oracle.database.jdbc:ojdbc8:18.15.0.0'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
+    implementation 'javax.servlet:jstl'
+    implementation "org.apache.tomcat.embed:tomcat-embed-jasper"
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
 
     testImplementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testCompileOnly 'org.projectlombok:lombok:1.18.34'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
+}
+
+tasks.withType(org.springframework.boot.gradle.tasks.bundling.BootWar) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 test {
