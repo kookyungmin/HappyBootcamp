@@ -1,1 +1,1 @@
-LEVEL 0 : 스프링부트 + JSP + Form Action (CRUD)
+LEVEL 1 : 스프링부트 + JSP + RESTful + VanilaJS (CRUD)
