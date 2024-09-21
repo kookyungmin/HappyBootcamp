@@ -33,4 +33,9 @@ public class TodoDaoJdbc implements TodoDao {
     public void deleteById(int id) {
         sqlSession.delete("deleteById", id);
     }
+
+    @Override
+    public TodoItem findById(int id) {
+        return sqlSession.selectOne("findById", id);
+    }
 }

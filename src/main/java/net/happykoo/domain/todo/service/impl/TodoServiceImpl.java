@@ -37,6 +37,11 @@ public class TodoServiceImpl implements TodoService {
         todoDao.deleteById(id);
     }
 
+    @Override
+    public TodoItem findById(int id) {
+        return todoDao.findById(id);
+    }
+
     private void validCheck(TodoItem todoItem) {
         if (StringUtils.isEmpty(todoItem.getContent())) {
             //TODO: 400 BAD REQUEST : HTTP Status code

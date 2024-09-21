@@ -3,44 +3,50 @@ package net.happykoo.domain.todo.controller;
 import net.happykoo.domain.todo.service.TodoService;
 import net.happykoo.domain.todo.vo.TodoItem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/todo")
+@RestController
+@RequestMapping("/api/todo-items")
 public class TodoController {
     @Autowired
     private TodoService todoService;
 
-    @GetMapping("/list")
-    public String getTodoList(Model model) {
+    @GetMapping({"", "/"})
+    public ResponseEntity<List<TodoItem>> getTodoList() {
         List<TodoItem> todoList = todoService.findAll();
 
-        model.addAttribute("todoList", todoList);
-        return "todo";
+        return ResponseEntity.ok().body(todoList);
     }
 
-    @PostMapping("/addItem")
-    public String addTodoItem(@ModelAttribute TodoItem todoItem) {
+    @GetMapping("/{id}")
+    public ResponseEntity<TodoItem> getTodoItem(@PathVariable int id) {
+        TodoItem todoItem = todoService.findById(id);
+
+        return ResponseEntity.ok().body(todoItem);
+    }
+
+    @PostMapping({"", "/"})
+    public ResponseEntity<Void> addTodoItem(@RequestBody TodoItem todoItem) {
         todoService.add(todoItem);
-        return "redirect:/todo/list";
+        return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/updateItem")
-    public String updateTodoItem(@ModelAttribute TodoItem todoItem) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateTodoItem(@PathVariable int id,
+                                 @RequestBody TodoItem todoItem) {
+        todoItem.setId(id);
         todoService.update(todoItem);
-        return "redirect:/todo/list";
+        return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/deleteItem")
-    public String deleteTodoItem(@ModelAttribute TodoItem todoItem) {
-        todoService.deleteById(todoItem.getId());
-        return "redirect:/todo/list";
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTodoItem(@PathVariable int id) {
+        todoService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

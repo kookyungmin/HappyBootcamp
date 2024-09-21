@@ -9,4 +9,6 @@ public interface TodoService {
     void add(TodoItem todoItem);
     void update(TodoItem todoItem);
     void deleteById(int id);
+
+    TodoItem findById(int id);
 }

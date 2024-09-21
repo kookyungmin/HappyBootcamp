@@ -10,6 +10,11 @@
         FROM TODO_ITEM
         ORDER BY SEQ
     </select>
+    <select id="findById" resultType="todoItem">
+        SELECT ID, CONTENT, COMPLETED, SEQ
+        FROM TODO_ITEM
+        WHERE ID = #{id}
+    </select>
     <update id="updateItem" parameterType="todoItem">
         UPDATE TODO_ITEM
         SET COMPLETED = #{completed},

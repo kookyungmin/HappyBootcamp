@@ -8,12 +8,13 @@ spring:
       maximum-pool-size: 5
   mvc:
     view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
+      suffix: .html
+      prefix: /html/
   devtools:
+    livereload:
+      enabled: true
     restart:
       enabled: true
-    additional-paths: src/main/webapp
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
@@ -22,6 +23,6 @@ jasypt:
       suffix: )
 logging:
   level:
-    root: INFO
+    root: DEBUG
 server:
   port: 18080
