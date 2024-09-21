@@ -1,1 +1,1 @@
-LEVEL 1 : 스프링부트 + RESTful + VanilaJS (CRUD)
+LEVEL 2 : 스프링부트 + RESTful + JQuery (CRUD)
