@@ -1,9 +1,11 @@
 spring:
   datasource:
-    driver-class-name: ENC(ltMchS7JKy21+9CWTycwwyUYqXYhw9zlwJySlnkLxcmBI+k1OjykENSookeP3uGT)
-    jdbc-url: ENC(X4Vxz2+MMOBwlxFThB+wtATRiVkup0adRlhGr0Fk8wkPx+b9ttYCHWRpY/f8/i59g+E5H9+5FgE=)
-    username: ENC(HOZ3tSR6ulcY/4X97I2Co+29kG9G8uWo)
-    password: ENC(c8/RVh7Rjpfpo/cV0tq2339sb6HgdExrcTIU1wk8qfg=)
+    hikari:
+      driver-class-name: ENC(ltMchS7JKy21+9CWTycwwyUYqXYhw9zlwJySlnkLxcmBI+k1OjykENSookeP3uGT)
+      jdbc-url: ENC(X4Vxz2+MMOBwlxFThB+wtATRiVkup0adRlhGr0Fk8wkPx+b9ttYCHWRpY/f8/i59g+E5H9+5FgE=)
+      username: ENC(HOZ3tSR6ulcY/4X97I2Co+29kG9G8uWo)
+      password: ENC(c8/RVh7Rjpfpo/cV0tq2339sb6HgdExrcTIU1wk8qfg=)
+      maximum-pool-size: 5
   mvc:
     view:
       prefix: /WEB-INF/views/
