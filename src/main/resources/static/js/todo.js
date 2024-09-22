@@ -1,17 +1,17 @@
 const createTodoCountElement = (todoList) => {
-    const $todoCountEl = document.getElementById("todo-count")
+    const $todoCountEl = $('#todo-count')
     if (!$todoCountEl) return
 
     const completedCount = todoList.filter(item => item.completed).length
 
-    $todoCountEl.innerText = `전체건수 :  ${todoList.length} 건 / 완료된 건수 :  ${completedCount} 건`
+    $todoCountEl.text(`전체건수 :  ${todoList.length} 건 / 완료된 건수 :  ${completedCount} 건`)
 }
 
 const createTodoListElement = (todoList) => {
-    const $todoListUl = document.getElementById("todo-list")
-    $todoListUl.innerHTML = ''
+    const $todoListUl = $("#todo-list")
+    let html = ''
     for(let item of todoList) {
-        $todoListUl.innerHTML +=
+        html +=
             `<li class="pt-3 pb-3">
                 <div class="flex items-center space-x-4 rtl:space-x-reverse">
                     <div class="flex-shrink-0" onclick="updateItem(${item.id}, ${item.completed})">
@@ -28,11 +28,11 @@ const createTodoListElement = (todoList) => {
                 </div>
             </li>`
     }
+    $todoListUl.html(html)
 }
 
 const getTodoList = () => {
-    sendGetAjax("/api/todo-items",  (res) => {
-        const todoList = JSON.parse(res)
+    sendGetAjax("/api/todo-items",  (todoList) => {
         createTodoCountElement(todoList)
         createTodoListElement(todoList)
     })
@@ -40,10 +40,10 @@ const getTodoList = () => {
 
 const addItem = (event) => {
     event.preventDefault()
-    const $el = document.getElementById("todo-content")
-    const content = $el.value
+    const $el = $("#todo-content")
+    const content = $el.val()
     sendPostAjax('/api/todo-items', { content }, () => {
-        $el.value = ''
+        $el.val('')
         getTodoList()
     });
 }
@@ -53,51 +53,47 @@ const updateItem = (id, completed) => {
 }
 
 const deleteItem = (id) => {
-    const $modalBtn = document.getElementById("modal-btn")
-    const $deleteBtn = document.getElementById("delete-btn")
+    const $modalBtn = $("#modal-btn")
+    const $deleteBtn = $("#delete-btn")
     const listener = event => {
         sendDeleteAjax(`/api/todo-items/${id}`, getTodoList)
-        $deleteBtn.removeEventListener("click", listener)
+        $deleteBtn.off("click")
     }
     $modalBtn.click()
-    $deleteBtn.addEventListener("click", listener)
+    $deleteBtn.on("click", listener)
 }
 
 const sendGetAjax = (url, successCallback) => {
-    sendAjax(url, 'GET', null, successCallback)
+    sendAjax(url, 'GET', null, 'json', successCallback)
 }
 
 const sendPostAjax = (url, body, successCallback) => {
-    sendAjax(url, 'POST', body, successCallback)
+    sendAjax(url, 'POST', body, 'text', successCallback)
 }
 
 const sendPutAjax = (url, body, successCallback) => {
-    sendAjax(url, 'PUT', body, successCallback)
+    sendAjax(url, 'PUT', body, 'text', successCallback)
 }
 
 const sendDeleteAjax = (url, successCallback) => {
-    sendAjax(url, 'DELETE', null, successCallback)
+    sendAjax(url, 'DELETE', null, 'text', successCallback)
 }
 
-const sendAjax = (url, method, body, successCallback) => {
-    const xhr = new XMLHttpRequest()
-
-    xhr.open(method, url)
-    xhr.setRequestHeader("content-type", "application/json; charset=UTF-8");
-    if (body) {
-        xhr.send(JSON.stringify(body))
-    } else {
-        xhr.send()
-    }
-    xhr.onload = (res) => {
-        if (res.target.status === 200) {
-            successCallback(res.target.response)
-        } else {
-            console.error("ERROR !! ", res.target)
+const sendAjax = (url, method, body, dataType, successCallback) => {
+    //contentType : request body type, dataType : response body type
+    $.ajax({
+        url,
+        type: method,
+        contentType: 'application/json',
+        data: JSON.stringify(body),
+        dataType: dataType,
+        success: successCallback,
+        error(xhr, status, error) {
+            console.error("ERROR !! ", error)
         }
-    }
+    })
 }
 
-window.onload = () => {
+$(document).ready(() => {
     getTodoList()
-}
+})
