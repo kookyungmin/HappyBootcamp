@@ -17,11 +17,11 @@ const createTodoListElement = (todoList) => {
                     <div class="flex-shrink-0" onclick="updateItem(${item.id}, ${item.completed})">
                         <i class="fa-solid fa-check text-2xl cursor-pointer ${item.completed ? 'text-green-500' : 'text-zinc-300'}"></i>
                     </div>
-                    <div class="flex-1 min-w-0">
+                    <divs class="flex-1 min-w-0">
                         <p class="text-lg font-medium text-gray-900 truncate dark:text-white">
                             ${item.content}
                         </p>
-                    </div>
+                    </divs>
                     <div class="inline-flex items-center text-base font-semibold text-zinc-300">
                         <i class="fa-solid fa-trash cursor-pointer" onclick="deleteItem(${item.id})"></i>
                     </div>
@@ -53,7 +53,14 @@ const updateItem = (id, completed) => {
 }
 
 const deleteItem = (id) => {
-    sendDeleteAjax(`/api/todo-items/${id}`, getTodoList)
+    const $modalBtn = document.getElementById("modal-btn")
+    const $deleteBtn = document.getElementById("delete-btn")
+    const listener = event => {
+        sendDeleteAjax(`/api/todo-items/${id}`, getTodoList)
+        $deleteBtn.removeEventListener("click", listener)
+    }
+    $modalBtn.click()
+    $deleteBtn.addEventListener("click", listener)
 }
 
 const sendGetAjax = (url, successCallback) => {
@@ -91,4 +98,6 @@ const sendAjax = (url, method, body, successCallback) => {
     }
 }
 
-window.onload = getTodoList
+window.onload = () => {
+    getTodoList()
+}
